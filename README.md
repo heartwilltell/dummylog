@@ -10,48 +10,54 @@ Main purpose is to help you test readers in your own programs.
 
 Write text logs to stdout:
 
-```go
+```
 if err := dummylog.New().Start(ctx); err != nil {
-return err
+    return err
 }
 ```
 
 Write JSON structured logs to stdout:
 
-```go
+```
 if err := dummylog.New(dummylog.WithFormat(dummylog.JSON)).Start(ctx); err != nil {
-return err
+    return err
 }
 ```
 
 Write JSON structured logs to file:
 
-```go
+```
 file, createErr := os.Create(filePath)
 if createErr != nil {
-return createErr
+    return createErr
 }
 
 dummy := dummylog.New(dummylog.WithWriter(file), dummylog.WithFormat(dummylog.JSON))
 if err := dummy.Start(ctx); err != nil {
-return err
+    return err
 }
 ```
 
 ## ⌨️ Command line interface
 
+Run dummylog as a process to prints messages to file or to stdout:
+
 ```
 ./dummylog run
 
 flags: 
-  -format - sets log format: 'text' or 'json'.
-  -file   - sets path to file where logs will be written.
+  -format - sets log format: 'text' or 'json'. Default is text.
+  -file   - sets path to file where logs will be written, 
+            if flag is not present, logs will written to stdout.
 ```
+
+Run dummylog as a server which listen to POST :8080/say and prints request body as message to file or to stdout:
 
 ```
 ./dummylog serve
 
 flags: 
-  -file - sets path to file where logs will be written.
+    -file - sets path to file where logs will be written, if 
+            flag is not present, logs will written to stdout.
 ```
 
