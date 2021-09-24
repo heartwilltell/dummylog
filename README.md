@@ -1,6 +1,6 @@
 # Dummylog
 
-Dummylog - prints silly messages to stdout or file in text of json format. Main purpose is to help you test readers in your own programs.
+Dummylog - prints silly messages to stdout or file in text of JSON format. Main purpose is to help you test readers in your own programs.
 
 ## ⚠️ This is not a logging library!
 ## ⌨️ Command line interface
