@@ -8,7 +8,21 @@ Main purpose is to help you test readers in your own programs.
 
 ## Usage
 
-Write JSON structured logs file:
+Write text logs to stdout:
+```go
+if err := dummylog.New().Start(ctx); err != nil {
+    return err
+}
+```
+
+Write JSON structured logs to stdout:
+```go
+if err := dummylog.New(dummylog.WithFormat(dummylog.JSON)).Start(ctx); err != nil {
+    return err
+}
+```
+
+Write JSON structured logs to file:
 ```go
 file, createErr := os.Create(filePath)
 if createErr != nil {
