@@ -92,13 +92,27 @@ func runCommand(ctx context.Context, args []string) error {
 }
 
 func serveCommand(ctx context.Context, args []string) error {
+	var (
+		filePath string
+	)
+
 	cmd := flag.NewFlagSet(serveCmd, flag.ExitOnError)
+	cmd.StringVar(&filePath, "file", "", "sets path to file where logs will be written.")
 
 	if err := cmd.Parse(args[1:]); err != nil {
 		return fmt.Errorf("failed to parse command arguments: %w", err)
 	}
 
 	options := make([]dummylog.Option, 0, 2)
+
+	if filePath != "" {
+		file, createErr := os.Create(filePath)
+		if createErr != nil {
+			return createErr
+		}
+
+		options = append(options, dummylog.WithWriter(file))
+	}
 
 	dummy := dummylog.New(options...)
 	if err := dummy.Serve(ctx); err != nil && !errors.Is(err, http.ErrServerClosed) {
