@@ -110,6 +110,11 @@ func (l *DummyLogger) say(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if _, err := l.writer.Write(body); err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(body); err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
