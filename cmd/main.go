@@ -5,6 +5,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,7 +14,8 @@ import (
 )
 
 const (
-	runCmd = "run"
+	runCmd   = "run"
+	serveCmd = "serve"
 )
 
 func main() {
@@ -36,8 +38,14 @@ func main() {
 		if err := runCommand(ctx, os.Args[1:]); err != nil && !errors.Is(err, context.Canceled) {
 			panic(fmt.Errorf("dummylog: %s command failed: %w", runCmd, err))
 		}
+
+	case serveCmd:
+		if err := serveCommand(ctx, os.Args[1:]); err != nil && !errors.Is(err, context.Canceled) {
+			panic(fmt.Errorf("dummylog: %s command failed: %w", serveCmd, err))
+		}
+
 	default:
-		panic(fmt.Errorf("dummylog: unexpected command: '%s', use '%s' to run log writer", os.Args[1], runCmd))
+		panic(fmt.Errorf("dummylog: unexpected command: '%s', use '%s' or '%s'", os.Args[1], runCmd, serveCmd))
 	}
 }
 
@@ -77,6 +85,23 @@ func runCommand(ctx context.Context, args []string) error {
 
 	dummy := dummylog.New(options...)
 	if err := dummy.Start(ctx); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func serveCommand(ctx context.Context, args []string) error {
+	cmd := flag.NewFlagSet(serveCmd, flag.ExitOnError)
+
+	if err := cmd.Parse(args[1:]); err != nil {
+		return fmt.Errorf("failed to parse command arguments: %w", err)
+	}
+
+	options := make([]dummylog.Option, 0, 2)
+
+	dummy := dummylog.New(options...)
+	if err := dummy.Serve(ctx); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
 
