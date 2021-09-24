@@ -169,6 +169,9 @@ func WithWriter(writer io.Writer) Option { return func(l *DummyLogger) { l.write
 // WithFormat sets DummyLogger log format.
 func WithFormat(format Format) Option { return func(l *DummyLogger) { l.format = format } }
 
+// WithServerAddr sets DummyLogger server address.
+func WithServerAddr(addr string) Option { return func(l *DummyLogger) { l.server.Addr = addr } }
+
 type Format string
 
 func (f Format) String() string { return string(f) }
