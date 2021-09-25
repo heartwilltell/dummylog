@@ -49,8 +49,8 @@ Run dummylog as a process to prints messages to file or to stdout:
 
 flags: 
   -format - sets log format: 'text' or 'json'. Default is text.
-  -file   - sets path to file where logs will be written, 
-            if flag is not present, logs will written to stdout.
+  -file   - sets path to file where logs will be written, if
+            flag is not present, logs will written to stdout.
 ```
 
 Run dummylog as a server which listen to POST :8080/say and prints request body as message to file or to stdout:
@@ -59,7 +59,8 @@ Run dummylog as a server which listen to POST :8080/say and prints request body 
 ./dummylog serve
 
 flags: 
-    -file - sets path to file where logs will be written, if 
-            flag is not present, logs will written to stdout.
+    - serveraddr - sets HTTP server address. Default is ':8080'.
+    -file        - sets path to file where logs will be written, if 
+                   flag is not present, logs will written to stdout.
 ```
 
