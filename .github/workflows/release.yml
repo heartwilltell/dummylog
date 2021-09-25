@@ -31,3 +31,18 @@ jobs:
         with:
           version: latest
           args: --timeout=3m
+
+  release:
+    needs:
+      - test
+      - lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17'
+
+      - name: make release
+        run: make release
+
