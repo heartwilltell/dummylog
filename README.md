@@ -59,8 +59,8 @@ Run dummylog as a server which listen to POST :8080/say and prints request body 
 ./dummylog serve
 
 flags: 
-    - serveraddr - sets HTTP server address. Default is ':8080'.
-    -file        - sets path to file where logs will be written, if 
-                   flag is not present, logs will written to stdout.
+    -serveraddr - sets HTTP server address. Default is ':8080'.
+    -file       - sets path to file where logs will be written, if 
+                  flag is not present, logs will written to stdout.
 ```
 
