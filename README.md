@@ -1,6 +1,6 @@
 # Dummylog
 
-Dummylog - prints silly messages to stdout or file in text of JSON format.
+🤪 Dummylog - prints silly messages to stdout or file in text or JSON format.
 
 ## ⚠️ This is not a logging library!
 
